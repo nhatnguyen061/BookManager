@@ -1,0 +1,51 @@
+﻿@page
+@model BulkyRazor_Temp.Pages.Categories.EditModel
+
+
+<div class="card shadow border-0 mt-4">
+    <div class="card-header bg-secondary bg-gradient ml-0 py-3">
+        <div class="row">
+            <div class="col-12 text-center">
+                <h2 class="text-while py-2">Edit Category</h2>
+            </div>
+        </div>
+    </div>
+    <div class="card-body p-4">
+        <form method="post">
+            <input asp-for="Category.Id" hidden />
+            <div class="border p-3 mt-4">
+
+                <div asp-validation-summary="All"></div>
+                <div class="mb-3 row">
+                    <label asp-for="Category.Name"></label>
+                    <input asp-for="Category.Name" type="text" class="form-control" />
+                    <span asp-validation-for="Category.Name" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3 row">
+                    <label asp-for="Category.DisplayOrder"></label>
+                    <input asp-for="Category.DisplayOrder" type="number" class="form-control" />
+                    <span asp-validation-for="Category.DisplayOrder" class="text-danger"></span>
+
+                </div>
+                <div class="row">
+                    <div class="col-6 col-md-3">
+                        <button type="submit" class="btn btn-primary form-control">Update</button>
+                    </div>
+                    <div class="col-6 btn-outline-light col-md-3">
+                        <a asp-page="/categories/index" class="btn btn-secondary border form-control">
+                            Back to list
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+@section Scripts {
+    @{
+        <partial name="_ValidationScriptsPartial" />
+    }
+}
