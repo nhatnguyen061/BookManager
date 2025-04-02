@@ -16,7 +16,7 @@ namespace BulkyBook.DataAccess.Repository
         //Dependency Injection
         private readonly ApplicationDbContext _db;
         //khai bao table chua kieu generic
-        public DbSet<T> dbSet;
+        public DbSet<T> dbSet;  
 
         public Repository(ApplicationDbContext db)
         {

@@ -25,7 +25,7 @@ builder.Services.AddIdentity<IdentityUser, IdentityRole>().AddEntityFrameworkSto
 
 // thêm cấu hình mặc định cho các routine
 builder.Services.ConfigureApplicationCookie(options =>
-{
+{   
     options.LoginPath = $"/Identity/Account/Login";
     options.LogoutPath = $"/Identity/Account/Logout";
     options.AccessDeniedPath = $"/Identity/Account/AccessDenied";
