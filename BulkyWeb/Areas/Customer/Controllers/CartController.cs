@@ -14,11 +14,13 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
     public class CartController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
         [BindProperty]
         public ShoppingCartVM ShoppingCartVM { get; set; }
-        public CartController(IUnitOfWork unitOfWork)
+        public CartController(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
         public IActionResult Index()
         {
@@ -128,7 +130,7 @@ namespace BulkyBookWeb.Areas.Customer.Controllers
             {
                 //đây là customer thường
                 //logic payment stripe
-                var domain = "https://localhost:7216/";
+                var domain = _configuration["DomainWeb:Domain"];
                 var options = new Stripe.Checkout.SessionCreateOptions
                 {
                     //nếu thanh toán thành công sẽ nevigate đến page xác nhận thanh toán ở dưới
