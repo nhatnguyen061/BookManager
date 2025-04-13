@@ -7,6 +7,7 @@ using BulkyBook.Utility;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Stripe;
 using BulkyBook.DataAccess.DBInitializer;
+using BulkyBookWeb.Hubs;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -35,8 +36,13 @@ builder.Services.ConfigureApplicationCookie(options =>
 //thêm cấu hình xác thực facebook
 builder.Services.AddAuthentication().AddFacebook(option =>
 {
-    option.AppId = "1366649127645782";
-    option.AppSecret = "6ed78e847266367310f1650eb5e9ac59";
+    option.AppId = builder.Configuration["Authentication:Facebook:AppId"];
+    option.AppSecret = builder.Configuration["Authentication:Facebook:AppSecret"];
+}).AddGoogle(options =>
+{
+    options.ClientId = builder.Configuration["Authentication:Google:ClientId"];
+    options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"];
+    options.CallbackPath = "/signin-google";
 });
 
 //thêm cấu hình cho session
@@ -55,6 +61,10 @@ builder.Services.AddScoped<IUnitOfWork, UnitOfWork>();
 //add DI cho emailsender
 builder.Services.AddScoped<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IDBInitializer, DBInitializer>();
+
+builder.Services.AddHttpClient();
+
+builder.Services.AddSignalR();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -87,6 +97,8 @@ app.MapRazorPages();
 app.MapControllerRoute(
     name: "default",
     pattern: "{area=Customer}/{controller=Home}/{action=Index}/{id?}");
+
+app.MapHub<BookHub>("/hubs/book");
 
 app.Run();
 //seed databse từ dbinitializer

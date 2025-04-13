@@ -9,6 +9,8 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using BulkyBook.Models.ViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Bulky.Utility;
+using BulkyBookWeb.Hubs;
+using Microsoft.AspNetCore.SignalR;
 
 namespace BulkyBookWeb.Areas.Admin.Controllers
 {
@@ -19,10 +21,12 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         private readonly IUnitOfWork _unitOfWork;
         //link đến wwwroot để lấy đường dẫn cho file tĩnh
         private readonly IWebHostEnvironment _webHostEnvironment;
-        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment)
+        private readonly IHubContext<BookHub> _hubContext;
+        public ProductController(IUnitOfWork unitOfWork, IWebHostEnvironment webHostEnvironment, IHubContext<BookHub> hubContext)
         {
             _unitOfWork = unitOfWork;
             _webHostEnvironment = webHostEnvironment;
+            _hubContext = hubContext;
         }
         public IActionResult Index()
         {
@@ -59,7 +63,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             }
         }
         [HttpPost]
-        public IActionResult Upsert(ProductVM productVM, List<IFormFile>? files)
+        public async Task<IActionResult> Upsert(ProductVM productVM, List<IFormFile>? files)
         {
             //check xem nếu obj truyền vào không hợp lệ với model khởi tạo
             if (ModelState.IsValid)
@@ -109,15 +113,10 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                     }
                     _unitOfWork.Product.Update(productVM.Product);
                     _unitOfWork.Save();
-
-
-
-
-
                 }
 
                 //tạo data tạm thời khi chuyển sang page khác
-
+                await _hubContext.Clients.All.SendAsync("ReceiveMessage");
                 TempData["success"] = "Product created/updated successfully";
                 //redirect đến action
                 return RedirectToAction("Index");
@@ -156,6 +155,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 _unitOfWork.ProductImage.Delete(imageToBeDelete);
                 _unitOfWork.Save();
                 TempData["success"] = "Delete Image successfully";
+
             }
             return RedirectToAction(nameof(Upsert), new
             {
@@ -204,7 +204,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
             });
         }
         [HttpDelete]
-        public IActionResult Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             var productToBeDelete = _unitOfWork.Product.Get(u => u.Id == id);
             if (productToBeDelete == null)
@@ -233,6 +233,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
 
             _unitOfWork.Product.Delete(productToBeDelete);
             _unitOfWork.Save();
+            await _hubContext.Clients.All.SendAsync("ReceiveMessage");
             return Json(new
             {
                 success = true,

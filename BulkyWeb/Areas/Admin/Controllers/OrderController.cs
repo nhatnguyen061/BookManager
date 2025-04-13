@@ -17,11 +17,13 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
     public class OrderController : Controller
     {
         private readonly IUnitOfWork _unitOfWork;
+        private readonly IConfiguration _configuration;
         [BindProperty]
         public OrderVM orderVM { get; set; }
-        public OrderController(IUnitOfWork unitOfWork)
+        public OrderController(IUnitOfWork unitOfWork, IConfiguration configuration)
         {
             _unitOfWork = unitOfWork;
+            _configuration = configuration;
         }
         [Authorize]
         public IActionResult Index()
@@ -153,7 +155,7 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
                 GetAll(u => u.OrderHeaderId == orderVM.OrderHeader.Id, includeProperties: "Product");
 
             //logic payment stripe
-            var domain = "https://localhost:7216/";
+            var domain = _configuration["DomainWeb:Domain"];
             var options = new Stripe.Checkout.SessionCreateOptions
             {
                 //nếu thanh toán thành công sẽ nevigate đến page xác nhận thanh toán ở dưới
