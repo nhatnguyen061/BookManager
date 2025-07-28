@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkyBook.Utility", "Bulky.
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BulkyRazor_Temp", "BulkyRazor_Temp\BulkyRazor_Temp.csproj", "{BB6D1D9A-F09D-4691-8C8B-F5851AEAB268}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BuklyBookApi", "BuklyBookApi\BuklyBookApi.csproj", "{4BC0B913-B60B-45C8-8CAB-6C01AACD55D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{BB6D1D9A-F09D-4691-8C8B-F5851AEAB268}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BB6D1D9A-F09D-4691-8C8B-F5851AEAB268}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BB6D1D9A-F09D-4691-8C8B-F5851AEAB268}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BC0B913-B60B-45C8-8CAB-6C01AACD55D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BC0B913-B60B-45C8-8CAB-6C01AACD55D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BC0B913-B60B-45C8-8CAB-6C01AACD55D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BC0B913-B60B-45C8-8CAB-6C01AACD55D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
