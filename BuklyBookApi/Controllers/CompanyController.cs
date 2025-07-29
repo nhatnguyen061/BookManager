@@ -23,5 +23,20 @@ namespace BuklyBookApi.Controllers
             List<Company> objCompanyList = _unitOfWork.Company.GetAll().ToList();
             return Ok(new { data = objCompanyList });
         }
+
+        [HttpDelete("{id}")]
+        public IActionResult Delete(int id)
+        {
+            var companyToBeDeleted = _unitOfWork.Company.Get(u => u.Id == id);
+            if (companyToBeDeleted == null)
+            {
+                return NotFound(new { success = false, message = "Company not found" });
+            }
+
+            _unitOfWork.Company.Delete(companyToBeDeleted);
+            _unitOfWork.Save();
+
+            return Ok(new { success = true, message = "Delete Successful" });
+        }
     }
 }

@@ -20,38 +20,21 @@
             </div>
         </div>
 
-        <table class="table table-bordered table-striped">
+        <table id="categoryTable" class="table table-bordered table-striped" width="100%">
             <thead>
                 <tr>
                     <th>Category Name</th>
                     <th>Display Order</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach (var obj in Model.OrderBy(u => u.Id))
-                {
-                    <tr>
-                        <td>@obj.Name</td>
-                        <td>
-                            @obj.DisplayOrder
-                        </td>
-                        <td>
-                            <div class="w-75 btn-group" role="group">
-                                <a asp-controller="Category" asp-action="Edit" asp-route-id="@obj.Id" class="btn btn-primary mx-2">
-                                    Edit
-                                </a>
-                                <a asp-controller="Category" asp-action="Delete" asp-route-id="@obj.Id" class="btn btn-danger mx-2">
-                                    Delete
-                                </a>
-                            </div>
-                        </td>
-                    </tr>
-                }
-
             </tbody>
         </table>
 
     </div>
 </div>
-
+@section Scripts{
+    <script src="~/js/category.js"></script>
+}
    
