@@ -101,38 +101,38 @@ namespace BulkyBookWeb.Areas.Admin.Controllers
         //    return RedirectToAction("Index");
         //}
         //call api trong mvc
-        #region API CALLS
-        [HttpGet]
-        public IActionResult GetAll()
-        {
-            List<Company> objCompanyList = _unitOfWork.Company.GetAll().ToList();
-            return Json(new
-            {
-                data=objCompanyList
-            });
-        }
-        [HttpDelete]
-        public IActionResult Delete(int? id)
-        {
-            var CompanyToBeDelete = _unitOfWork.Company.Get(u => u.Id == id);
-            if(CompanyToBeDelete == null)
-            {
-                return Json(new
-                {
-                    success =false,
-                    message = "Error while deleting"
-                });
-            }           
+        //#region API CALLS
+        //[HttpGet]
+        //public IActionResult GetAll()
+        //{
+        //    List<Company> objCompanyList = _unitOfWork.Company.GetAll().ToList();
+        //    return Json(new
+        //    {
+        //        data=objCompanyList
+        //    });
+        //}
+        //[HttpDelete]
+        //public IActionResult Delete(int? id)
+        //{
+        //    var CompanyToBeDelete = _unitOfWork.Company.Get(u => u.Id == id);
+        //    if(CompanyToBeDelete == null)
+        //    {
+        //        return Json(new
+        //        {
+        //            success =false,
+        //            message = "Error while deleting"
+        //        });
+        //    }           
 
-            _unitOfWork.Company.Delete(CompanyToBeDelete);
-            _unitOfWork.Save();
-            return Json(new
-            {
-                success = true,
-                message = "Delete Successful"
-            });
-        }
-        #endregion
+        //    _unitOfWork.Company.Delete(CompanyToBeDelete);
+        //    _unitOfWork.Save();
+        //    return Json(new
+        //    {
+        //        success = true,
+        //        message = "Delete Successful"
+        //    });
+        //}
+        //#endregion
 
 
     }
